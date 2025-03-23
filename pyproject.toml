@@ -1,0 +1,31 @@
+[project]
+name = "vis_escape"
+version = "0.1.0"
+description = "VisEscape: A Benchmark for Evaluating Exploration-driven Decision-making in Virtual Escape Rooms"
+
+readme = "README.md"
+requires-python = "^3.9"
+dependencies = [
+    "numpy>=2.0.2",
+    "pandas>=2.2.3",
+    "opencv-python>=4.10.0",
+    "pillow>=11.1.0",
+    "spacy>=3.8.3",
+    "openai>=1.59.5",
+    "datasets>=3.2.0",
+    "networkx>=3.2.1",
+    "pydantic>=2.10.4",
+    "requests>=2.32.3",
+    "tqdm>=4.67.1"
+]
+[project.scripts]
+make-wall-caption = "vis_escape.config.caption_wall_view:main"
+make-object-caption = "vis_escape.config.caption_object_view:main"
+make-item-caption = "vis_escape.config.caption_item_view:main"
+
+[tool.poetry]
+packages = [{include = "vis_escape", from = "src"}]
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
