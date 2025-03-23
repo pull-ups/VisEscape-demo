@@ -1,4 +1,4 @@
-# VisEscaper: A Benchmark for Evaluating Exploration-driven Decision-making in Virtual Escape Room Games
+# VisEscape: A Benchmark for Evaluating Exploration-driven Decision-making in Virtual Escape Rooms
 
 **Seungwon Lim**, **Sungwoong Kim**, **Jihwan Yu**, **Sungjae Lee**, **Jiwan Chung**, **Youngjae Yu**
 
