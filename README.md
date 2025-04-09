@@ -5,10 +5,12 @@
 Yonsei University
 
 [![arXiv](https://img.shields.io/badge/arXiv-2503.14427-b31b1b.svg)](https://arxiv.org/abs/2503.14427)
+
+![VisEscape Demo](./demo.png)
+
 ## Abstract
 > Escape rooms present a unique cognitive challenge that demands exploration-driven planning: players should actively search their environment, continuously update their knowledge based on new discoveries, and connect disparate clues to determine which elements are relevant to their objectives. Motivated by this, we introduce VisEscape, a benchmark of 20 virtual escape rooms specifically designed to evaluate AI models under these challenging conditions, where success depends not only on solving isolated puzzles but also on iteratively constructing and refining spatial-temporal knowledge of a dynamically changing environment. On VisEscape, we observed that even state-of-the-art multimodal models generally fail to escape the rooms, showing considerable variation in their levels of progress and trajectories. To address this issue, we propose VisEscaper, which effectively integrates Memory, Feedback, and ReAct modules, demonstrating significant improvements by performing 3.7 times more effectively and 5.0 times more efficiently on average.
 
-![VisEscape Demo](./demo.png)
 
 ## Installation - for client and running game by yourself
 Install on your own machine.  
