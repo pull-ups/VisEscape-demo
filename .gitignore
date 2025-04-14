@@ -182,21 +182,8 @@ Thumbs.db
 # Video files
 **/*.mp4
 
-# Assets folder
-assets/
-
-
-# Evaluation
-evaluation/spatial_memory/internvl/
-evaluation/spatial_memory/Llama-3.3-70B/
-evaluation/spatial_memory/Qwen-32b-Instruct/
-evaluation/spatial_memory/Yi-34b/
-evaluation/spatial_memory/4o/
-evaluation/spatial_memory/4o-mini/
 
 # Logs
 logs/
 stdout/
 
-# Spatial memories
-evaluation/spatial_memory
