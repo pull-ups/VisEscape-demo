@@ -2,9 +2,19 @@
 
 **Seungwon Lim**, **Sungwoong Kim**, **Jihwan Yu**, **Sungjae Lee**, **Jiwan Chung**, **Youngjae Yu**
 
+
 Yonsei University
 
+
 [![arXiv](https://img.shields.io/badge/arXiv-2503.14427-b31b1b.svg)](https://arxiv.org/abs/2503.14427)
+
+## 📢Timeline
+
+1. [20-Aug-2025] Accepted by EMNLP 2025! See VisEscape in Suzhou!
+2. [5-May-2025] New version of the paper released! We added new experiments and analysis regarding the reasoning process of MLLMs.
+3. [23-Mar-2025] Repo and paper released.
+* (We will soon update full dataset!)
+
 
 ![VisEscape Demo](./demo.png)
 
@@ -12,8 +22,8 @@ Yonsei University
 > Escape rooms present a unique cognitive challenge that demands exploration-driven planning: with the sole instruction to 'escape the room', players must actively search their environment, collecting information, and finding solutions through repeated trial and error. Motivated by this, we introduce VisEscape, a benchmark of 20 virtual escape rooms specifically designed to evaluate AI models under these challenging conditions, where success depends not only on solving isolated puzzles but also on iteratively constructing and refining spatial-temporal knowledge of a dynamically changing environment. On VisEscape, we observe that even state-of-the-art multi-modal models generally fail to escape the rooms, showing considerable variation in their progress and problem-solving approaches. We find that integrating memory management and reasoning contributes to efficient exploration and enables successive hypothesis formulation and testing, thereby leading to significant improvements in dynamic and exploration-driven environments.
 
 
-## Installation - for client and running game by yourself
-Install on your own machine.  
+## 1. Installation
+
 
 1. Clone this repository.
     ```bash
@@ -35,7 +45,7 @@ Install on your own machine.
     poetry install
     ```
 
-## Installation - for vLLM server to run open-source models
+## 2. vLLM Installation - for vLLM server to run open-source models
 Install on your server.  
 prerequisite: `cuda-toolkit>=12.4`  
 
@@ -49,15 +59,10 @@ prerequisite: `cuda-toolkit>=12.4`
     pip install vllm==0.7.3
     ```
 
-## Execution - For Human
-You can play the escape rooms game by yourself by executing:
-```bash
-python scripts/run_ui.py -r room[room_number]
-```
 
-## Execution - For AI models
+## 3. Running experiment 
 
-### 1. Launch server (only for open-source models)
+### 1. Launch server (required for open-source models)
 
 Since experiment for VisEscape requires interaction with game environment, we recommend you to launch vLLM server before running experiments, instead of directly calling inference API.
 
@@ -73,8 +78,8 @@ Since experiment for VisEscape requires interaction with game environment, we re
     bash ./scripts/server/vllm.sh
     ```
     Then you can access your vLLM server at `http://0.0.0.0:[VLLM_PORT]/v1`.
-### 2. Make captions for each image observations
-Since some modules require captions for each image observations instead of raw images, you need to make captions for each image observations before running experiments.  
+### 2. Make captions for each observations
+Since some modules require captions for each observations instead of raw images, you need to make captions for each observations before running experiments.  
 
 - For open-source models:
     * Change variables in `scripts/config/make_caption.sh`
@@ -109,5 +114,13 @@ python scripts/run_ui.py -r room[room_number]
 ```
 Then the metadata for each step and the final result will be saved in `./scripts/results/`.
 
-**More codes and datasets will be available soon!**
+
+
+
+
+### Test Escape Games by yourself
+You can play the escape rooms game by yourself by executing:
+```bash
+python scripts/run_ui.py -r room[room_number]
+```
 
