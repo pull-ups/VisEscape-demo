@@ -130,6 +130,13 @@ python scripts/run_human.py -r room[room_number]
 ```
 
 
-## 6. Acknowledgments
+## 6. Citation
 
-
+```bibtex
+@article{lim2025visescape,
+  title={VisEscape: A Benchmark for Evaluating Exploration-driven Decision-making in Virtual Escape Rooms},
+  author={Lim, Seungwon and Kim, Sungwoong and Yu, Jihwan and Lee, Sungjae and Chung, Jiwan and Yu, Youngjae},
+  journal={arXiv preprint arXiv:2503.14427},
+  year={2025}
+}
+```
