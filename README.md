@@ -13,7 +13,6 @@ Yonsei University
 2. **[20-Aug-2025]** Accepted by **EMNLP 2025**! See VisEscape in Suzhou!
 3. **[5-May-2025]** New version of the paper released! We added new experiments and analysis regarding the reasoning process of MLLMs.
 4. **[23-Mar-2025]** Repo and paper released.
-* (We will soon update full dataset!)
 
 
 ![VisEscape Demo](./demo.png)
