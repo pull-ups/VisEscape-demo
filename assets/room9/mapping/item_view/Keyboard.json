@@ -1,0 +1,9 @@
+{
+  "item_states": [
+    {
+      "idx": 1,
+      "name": "not_solved",
+      "image_path": "N_IV_computer(keyboard).png"
+    }
+  ]
+}

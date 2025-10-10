@@ -9,7 +9,7 @@
       "inspect Cupboard"
     ],
     "chosen_action": "inspect 2TierDrawer",
-    "image_path": "/Users/sngwon/python/roomescape/assets/room1/image/object_view/2TierDrawer/doubledrawerCL.png",
+    "image_path": "room1/image/object_view/2TierDrawer/doubledrawerCL.png",
     "previous_image_path": null
   },
   {
@@ -22,8 +22,8 @@
       "open_first_drawer"
     ],
     "chosen_action": "open_first_drawer",
-    "image_path": "/Users/sngwon/python/roomescape/assets/room1/image/object_view/2TierDrawer/doubledrawerOL.png",
-    "previous_image_path": "/Users/sngwon/python/roomescape/assets/room1/image/object_view/2TierDrawer/doubledrawerCL.png"
+    "image_path": "room1/image/object_view/2TierDrawer/doubledrawerOL.png",
+    "previous_image_path": "room1/image/object_view/2TierDrawer/doubledrawerCL.png"
   },
   {
     "turn_number": 3,
@@ -36,8 +36,8 @@
       "press Button"
     ],
     "chosen_action": "press Button",
-    "image_path": "/Users/sngwon/python/roomescape/assets/room1/image/object_view/2TierDrawer/doubledrawerOO_with_keyA.png",
-    "previous_image_path": "/Users/sngwon/python/roomescape/assets/room1/image/object_view/2TierDrawer/doubledrawerOL.png"
+    "image_path": "room1/image/object_view/2TierDrawer/doubledrawerOO_with_keyA.png",
+    "previous_image_path": "room1/image/object_view/2TierDrawer/doubledrawerOL.png"
   },
   {
     "turn_number": 4,
@@ -51,8 +51,8 @@
       "close_second_drawer"
     ],
     "chosen_action": "pick key_A",
-    "image_path": "/Users/sngwon/python/roomescape/assets/room1/image/object_view/2TierDrawer/doubledrawerOO_no_keyA.png",
-    "previous_image_path": "/Users/sngwon/python/roomescape/assets/room1/image/object_view/2TierDrawer/doubledrawerOO_with_keyA.png"
+    "image_path": "room1/image/object_view/2TierDrawer/doubledrawerOO_no_keyA.png",
+    "previous_image_path": "room1/image/object_view/2TierDrawer/doubledrawerOO_with_keyA.png"
   },
   {
     "turn_number": 5,
@@ -66,8 +66,8 @@
       "use key_A"
     ],
     "chosen_action": "turn_to_south",
-    "image_path": "/Users/sngwon/python/roomescape/assets/room1/image/wall_view/SOUTH/exitdoorL_wardrobeL.png",
-    "previous_image_path": "/Users/sngwon/python/roomescape/assets/room1/image/object_view/2TierDrawer/doubledrawerOO_no_keyA.png"
+    "image_path": "room1/image/wall_view/SOUTH/exitdoorL_wardrobeL.png",
+    "previous_image_path": "room1/image/object_view/2TierDrawer/doubledrawerOO_no_keyA.png"
   },
   {
     "turn_number": 6,
@@ -79,8 +79,8 @@
       "inspect Door"
     ],
     "chosen_action": "inspect Wardrobe",
-    "image_path": "/Users/sngwon/python/roomescape/assets/room1/image/object_view/Wardrobe/wardrobeL.png",
-    "previous_image_path": "/Users/sngwon/python/roomescape/assets/room1/image/wall_view/SOUTH/exitdoorL_wardrobeL.png"
+    "image_path": "room1/image/object_view/Wardrobe/wardrobeL.png",
+    "previous_image_path": "room1/image/wall_view/SOUTH/exitdoorL_wardrobeL.png"
   },
   {
     "turn_number": 7,
@@ -93,8 +93,8 @@
       "use key_A"
     ],
     "chosen_action": "inspect Keylock_A",
-    "image_path": "/Users/sngwon/python/roomescape/assets/room1/image/item_view/Keylock_A/keylock_A(not_solved).png",
-    "previous_image_path": "/Users/sngwon/python/roomescape/assets/room1/image/object_view/Wardrobe/wardrobeL.png"
+    "image_path": "room1/image/item_view/Keylock_A/keylock_A(not_solved).png",
+    "previous_image_path": "room1/image/object_view/Wardrobe/wardrobeL.png"
   },
   {
     "turn_number": 8,
@@ -106,8 +106,8 @@
       "use key_A"
     ],
     "chosen_action": "use key_A",
-    "image_path": "/Users/sngwon/python/roomescape/assets/room1/image/object_view/Wardrobe/wardrobeO_with_keyB.png",
-    "previous_image_path": "/Users/sngwon/python/roomescape/assets/room1/image/item_view/Keylock_A/keylock_A(not_solved).png"
+    "image_path": "room1/image/object_view/Wardrobe/wardrobeO_with_keyB.png",
+    "previous_image_path": "room1/image/item_view/Keylock_A/keylock_A(not_solved).png"
   },
   {
     "turn_number": 9,
@@ -120,8 +120,8 @@
       "close"
     ],
     "chosen_action": "pick key_B",
-    "image_path": "/Users/sngwon/python/roomescape/assets/room1/image/object_view/Wardrobe/wardrobeO_no_keyB.png",
-    "previous_image_path": "/Users/sngwon/python/roomescape/assets/room1/image/object_view/Wardrobe/wardrobeO_with_keyB.png"
+    "image_path": "room1/image/object_view/Wardrobe/wardrobeO_no_keyB.png",
+    "previous_image_path": "room1/image/object_view/Wardrobe/wardrobeO_with_keyB.png"
   },
   {
     "turn_number": 10,
@@ -134,8 +134,8 @@
       "use key_B"
     ],
     "chosen_action": "turn_to_west",
-    "image_path": "/Users/sngwon/python/roomescape/assets/room1/image/wall_view/WEST/desklockL.png",
-    "previous_image_path": "/Users/sngwon/python/roomescape/assets/room1/image/object_view/Wardrobe/wardrobeO_no_keyB.png"
+    "image_path": "room1/image/wall_view/WEST/desklockL.png",
+    "previous_image_path": "room1/image/object_view/Wardrobe/wardrobeO_no_keyB.png"
   },
   {
     "turn_number": 11,
@@ -146,8 +146,8 @@
       "inspect Desk"
     ],
     "chosen_action": "inspect Desk",
-    "image_path": "/Users/sngwon/python/roomescape/assets/room1/image/object_view/Desk/desklockL.png",
-    "previous_image_path": "/Users/sngwon/python/roomescape/assets/room1/image/wall_view/WEST/desklockL.png"
+    "image_path": "room1/image/object_view/Desk/desklockL.png",
+    "previous_image_path": "room1/image/wall_view/WEST/desklockL.png"
   },
   {
     "turn_number": 12,
@@ -160,8 +160,8 @@
       "use key_B"
     ],
     "chosen_action": "inspect Keylock_B",
-    "image_path": "/Users/sngwon/python/roomescape/assets/room1/image/item_view/Keylock_B/keylock_B(not_solved).png",
-    "previous_image_path": "/Users/sngwon/python/roomescape/assets/room1/image/object_view/Desk/desklockL.png"
+    "image_path": "room1/image/item_view/Keylock_B/keylock_B(not_solved).png",
+    "previous_image_path": "room1/image/object_view/Desk/desklockL.png"
   },
   {
     "turn_number": 13,
@@ -173,8 +173,8 @@
       "use key_B"
     ],
     "chosen_action": "use key_B",
-    "image_path": "/Users/sngwon/python/roomescape/assets/room1/image/object_view/Desk/desklockO.png",
-    "previous_image_path": "/Users/sngwon/python/roomescape/assets/room1/image/item_view/Keylock_B/keylock_B(not_solved).png"
+    "image_path": "room1/image/object_view/Desk/desklockO.png",
+    "previous_image_path": "room1/image/item_view/Keylock_B/keylock_B(not_solved).png"
   },
   {
     "turn_number": 14,
@@ -187,8 +187,8 @@
       "close"
     ],
     "chosen_action": "inspect Image1",
-    "image_path": "/Users/sngwon/python/roomescape/assets/room1/image/item_view/Image1/puzzle_A(default).png",
-    "previous_image_path": "/Users/sngwon/python/roomescape/assets/room1/image/object_view/Desk/desklockO.png"
+    "image_path": "room1/image/item_view/Image1/puzzle_A(default).png",
+    "previous_image_path": "room1/image/object_view/Desk/desklockO.png"
   },
   {
     "turn_number": 15,
@@ -199,8 +199,8 @@
       "step_back"
     ],
     "chosen_action": "turn_to_east",
-    "image_path": "/Users/sngwon/python/roomescape/assets/room1/image/wall_view/EAST/safeL.png",
-    "previous_image_path": "/Users/sngwon/python/roomescape/assets/room1/image/item_view/Image1/puzzle_A(default).png"
+    "image_path": "room1/image/wall_view/EAST/safeL.png",
+    "previous_image_path": "room1/image/item_view/Image1/puzzle_A(default).png"
   },
   {
     "turn_number": 16,
@@ -211,8 +211,8 @@
       "inspect Safe"
     ],
     "chosen_action": "inspect Safe",
-    "image_path": "/Users/sngwon/python/roomescape/assets/room1/image/object_view/Safe/safeL.png",
-    "previous_image_path": "/Users/sngwon/python/roomescape/assets/room1/image/wall_view/EAST/safeL.png"
+    "image_path": "room1/image/object_view/Safe/safeL.png",
+    "previous_image_path": "room1/image/wall_view/EAST/safeL.png"
   },
   {
     "turn_number": 17,
@@ -225,8 +225,8 @@
       "unlock"
     ],
     "chosen_action": "inspect Numberlock_A",
-    "image_path": "/Users/sngwon/python/roomescape/assets/room1/image/item_view/Numberlock_A/numberlock_A(not_solved).png",
-    "previous_image_path": "/Users/sngwon/python/roomescape/assets/room1/image/object_view/Safe/safeL.png"
+    "image_path": "room1/image/item_view/Numberlock_A/numberlock_A(not_solved).png",
+    "previous_image_path": "room1/image/object_view/Safe/safeL.png"
   },
   {
     "turn_number": 18,
@@ -237,8 +237,8 @@
       "step_back"
     ],
     "chosen_action": "8056",
-    "image_path": "/Users/sngwon/python/roomescape/assets/room1/image/object_view/Safe/safeO_with_keyC.png",
-    "previous_image_path": "/Users/sngwon/python/roomescape/assets/room1/image/item_view/Numberlock_A/numberlock_A(not_solved).png"
+    "image_path": "room1/image/object_view/Safe/safeO_with_keyC.png",
+    "previous_image_path": "room1/image/item_view/Numberlock_A/numberlock_A(not_solved).png"
   },
   {
     "turn_number": 19,
@@ -251,8 +251,8 @@
       "close"
     ],
     "chosen_action": "pick key_C",
-    "image_path": "/Users/sngwon/python/roomescape/assets/room1/image/object_view/Safe/safeO_no_keyC.png",
-    "previous_image_path": "/Users/sngwon/python/roomescape/assets/room1/image/object_view/Safe/safeO_with_keyC.png"
+    "image_path": "room1/image/object_view/Safe/safeO_no_keyC.png",
+    "previous_image_path": "room1/image/object_view/Safe/safeO_with_keyC.png"
   },
   {
     "turn_number": 20,
@@ -265,8 +265,8 @@
       "use key_C"
     ],
     "chosen_action": "turn_to_north",
-    "image_path": "/Users/sngwon/python/roomescape/assets/room1/image/wall_view/NORTH/doubledrawerOO_cupboardL.png",
-    "previous_image_path": "/Users/sngwon/python/roomescape/assets/room1/image/object_view/Safe/safeO_no_keyC.png"
+    "image_path": "room1/image/wall_view/NORTH/doubledrawerOO_cupboardL.png",
+    "previous_image_path": "room1/image/object_view/Safe/safeO_no_keyC.png"
   },
   {
     "turn_number": 21,
@@ -278,8 +278,8 @@
       "inspect Cupboard"
     ],
     "chosen_action": "inspect Cupboard",
-    "image_path": "/Users/sngwon/python/roomescape/assets/room1/image/object_view/Cupboard/cupboardL.png",
-    "previous_image_path": "/Users/sngwon/python/roomescape/assets/room1/image/wall_view/NORTH/doubledrawerOO_cupboardL.png"
+    "image_path": "room1/image/object_view/Cupboard/cupboardL.png",
+    "previous_image_path": "room1/image/wall_view/NORTH/doubledrawerOO_cupboardL.png"
   },
   {
     "turn_number": 22,
@@ -292,8 +292,8 @@
       "use key_C"
     ],
     "chosen_action": "inspect Keylock_C",
-    "image_path": "/Users/sngwon/python/roomescape/assets/room1/image/item_view/Keylock_C/keylock_C(not_solved).png",
-    "previous_image_path": "/Users/sngwon/python/roomescape/assets/room1/image/object_view/Cupboard/cupboardL.png"
+    "image_path": "room1/image/item_view/Keylock_C/keylock_C(not_solved).png",
+    "previous_image_path": "room1/image/object_view/Cupboard/cupboardL.png"
   },
   {
     "turn_number": 23,
@@ -305,8 +305,8 @@
       "use key_C"
     ],
     "chosen_action": "use key_C",
-    "image_path": "/Users/sngwon/python/roomescape/assets/room1/image/object_view/Cupboard/cupboardO_with_IDcard.png",
-    "previous_image_path": "/Users/sngwon/python/roomescape/assets/room1/image/item_view/Keylock_C/keylock_C(not_solved).png"
+    "image_path": "room1/image/object_view/Cupboard/cupboardO_with_IDcard.png",
+    "previous_image_path": "room1/image/item_view/Keylock_C/keylock_C(not_solved).png"
   },
   {
     "turn_number": 24,
@@ -319,8 +319,8 @@
       "pick IDcard"
     ],
     "chosen_action": "pick IDcard",
-    "image_path": "/Users/sngwon/python/roomescape/assets/room1/image/object_view/Cupboard/cupboardO_no_IDcard.png",
-    "previous_image_path": "/Users/sngwon/python/roomescape/assets/room1/image/object_view/Cupboard/cupboardO_with_IDcard.png"
+    "image_path": "room1/image/object_view/Cupboard/cupboardO_no_IDcard.png",
+    "previous_image_path": "room1/image/object_view/Cupboard/cupboardO_with_IDcard.png"
   },
   {
     "turn_number": 25,
@@ -333,8 +333,8 @@
       "use IDcard"
     ],
     "chosen_action": "turn_to_south",
-    "image_path": "/Users/sngwon/python/roomescape/assets/room1/image/wall_view/SOUTH/exitdoorL_wardrobeO.png",
-    "previous_image_path": "/Users/sngwon/python/roomescape/assets/room1/image/object_view/Cupboard/cupboardO_no_IDcard.png"
+    "image_path": "room1/image/wall_view/SOUTH/exitdoorL_wardrobeO.png",
+    "previous_image_path": "room1/image/object_view/Cupboard/cupboardO_no_IDcard.png"
   },
   {
     "turn_number": 26,
@@ -346,8 +346,8 @@
       "inspect Door"
     ],
     "chosen_action": "inspect Door",
-    "image_path": "/Users/sngwon/python/roomescape/assets/room1/image/object_view/Door/exitdoorL.png",
-    "previous_image_path": "/Users/sngwon/python/roomescape/assets/room1/image/wall_view/SOUTH/exitdoorL_wardrobeO.png"
+    "image_path": "room1/image/object_view/Door/exitdoorL.png",
+    "previous_image_path": "room1/image/wall_view/SOUTH/exitdoorL_wardrobeO.png"
   },
   {
     "turn_number": 27,
@@ -360,8 +360,8 @@
       "use IDcard"
     ],
     "chosen_action": "inspect Idcardlock_A",
-    "image_path": "/Users/sngwon/python/roomescape/assets/room1/image/item_view/Idcardlock_A/idcardlock_A(not_solved).png",
-    "previous_image_path": "/Users/sngwon/python/roomescape/assets/room1/image/object_view/Door/exitdoorL.png"
+    "image_path": "room1/image/item_view/Idcardlock_A/idcardlock_A(not_solved).png",
+    "previous_image_path": "room1/image/object_view/Door/exitdoorL.png"
   },
   {
     "turn_number": 28,
@@ -373,7 +373,7 @@
       "use IDcard"
     ],
     "chosen_action": "use IDcard",
-    "image_path": "/Users/sngwon/python/roomescape/assets/room1/image/object_view/Door/exitdoorO.png",
-    "previous_image_path": "/Users/sngwon/python/roomescape/assets/room1/image/item_view/Idcardlock_A/idcardlock_A(not_solved).png"
+    "image_path": "room1/image/object_view/Door/exitdoorO.png",
+    "previous_image_path": "room1/image/item_view/Idcardlock_A/idcardlock_A(not_solved).png"
   }
 ]

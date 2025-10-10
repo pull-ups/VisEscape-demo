@@ -5,7 +5,7 @@ from typing import Mapping, Optional
 
 import click
 
-from vis_escape.utils import run_inference_vision_caption_vllm, run_inference_vision_caption_openai
+from vis_escape.utils import run_inference_vision_caption
 
 def update_captions_json(
     captions_file: str, object_type: str, image_path: str, caption: str
@@ -66,17 +66,12 @@ Your description should fulfill the following rules:
         print(f"\nProcessing {state['image_path']}...")
         print(f"Prompt: {prompt}")
 
-        if "gpt" in model_name:
-            caption = run_inference_vision_caption_openai(
-                image_path, prompt, model_name
-            )
-        else:
-            caption = run_inference_vision_caption_vllm(
-                image_path,
-                prompt,
-                model_name,
-                base_url,
-            )
+        caption = run_inference_vision_caption(
+            image_path,
+            prompt,
+            model_name,
+            base_url,
+        )
         print(f"Generated caption: {caption}")
 
         update_captions_json(captions_file, object_type, state["image_path"], caption)
@@ -85,8 +80,8 @@ Your description should fulfill the following rules:
 @click.command()
 @click.option("-a", "--assets-dir", type=str, required=True)
 @click.option("-m", "--model-name", type=str, required=True)
-@click.option("-u", "--agent-hostname", type=str, required=False, default="127.0.0.1")
-@click.option("-p", "--agent-port", type=int, required=True)
+@click.option("-u", "--agent-hostname", type=str, required=False, default=None)
+@click.option("-p", "--agent-port", type=int, required=False, default=None)
 def main(assets_dir, model_name, agent_hostname, agent_port):
     assets_dir = Path(assets_dir).expanduser().absolute()
 
@@ -97,9 +92,12 @@ def main(assets_dir, model_name, agent_hostname, agent_port):
     captions_file = assets_dir / "captions" / model_name / "image_captions.json"
     captions_file.parent.mkdir(parents=True, exist_ok=True)
 
-    # Get base url & default query to use API
-    base_url = f"http://{agent_hostname}:{agent_port}/v1"
-    print("base_url", base_url)
+    # Get base url for vLLM (None if using OpenAI)
+    base_url = f"http://{agent_hostname}:{agent_port}/v1" if agent_hostname and agent_port else None
+    if base_url:
+        print("Using vLLM server at:", base_url)
+    else:
+        print("Using OpenAI API")
     # Process json
     for json_path in object_view_dir.glob("*.json"):
         print(f"\nProcessing object view file: {json_path.name}")

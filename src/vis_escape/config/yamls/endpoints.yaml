@@ -1,0 +1,35 @@
+models:
+  # OpenAI models
+  gpt-4o-mini:
+    type: openai
+    model_name: gpt-4o-mini
+  
+  gpt-4o-2024-08-06:
+    type: openai
+    model_name: gpt-4o-2024-08-06
+
+  "OpenGVLab/InternVL2_5-38B":
+    type: vllm
+    base_url: http://127.0.0.1:39031/v1
+  
+  "Qwen/Qwen2.5-32B-Instruct":
+    type: vllm
+    base_url: http://127.0.0.1:39032/v1
+  
+
+
+# Preset combinations for experiments
+presets:
+  # Closed sources
+  gpt4o-mini:
+    vlm: gpt-4o-mini
+    llm: gpt-4o-mini
+  
+  gpt4o:
+    vlm: gpt-4o-2024-08-06
+    llm: gpt-4o-2024-08-06
+    
+  # Open-source models
+  internvl:
+    vlm: "OpenGVLab/InternVL2_5-38B"
+    llm: "Qwen/Qwen2.5-32B-Instruct"

@@ -9,10 +9,10 @@ Yonsei University
 [![arXiv](https://img.shields.io/badge/arXiv-2503.14427-b31b1b.svg)](https://arxiv.org/abs/2503.14427)
 
 ## 📢Timeline
-
-1. **[20-Aug-2025]** Accepted by **EMNLP 2025**! See VisEscape in Suzhou!
-2. **[5-May-2025]** New version of the paper released! We added new experiments and analysis regarding the reasoning process of MLLMs.
-3. **[23-Mar-2025]** Repo and paper released.
+1. **[10-Oct-2025]** Full dataset and overall code are released! 
+2. **[20-Aug-2025]** Accepted by **EMNLP 2025**! See VisEscape in Suzhou!
+3. **[5-May-2025]** New version of the paper released! We added new experiments and analysis regarding the reasoning process of MLLMs.
+4. **[23-Mar-2025]** Repo and paper released.
 * (We will soon update full dataset!)
 
 
@@ -33,7 +33,7 @@ Yonsei University
 2. [Optional] Create & Activate your virtual env.
     ```bash
     conda create -n vis-escape python=3.9
-    conda activate 
+    conda activate vis-escape
     ```
 3. Install via poetry.
     ```bash
@@ -45,82 +45,92 @@ Yonsei University
     poetry install
     ```
 
-## 2. vLLM Installation - for vLLM server to run open-source models
-Install on your server.  
-prerequisite: `cuda-toolkit>=12.4`  
 
-1. [Optional] Create & Activate your virtual env.
-    ```bash
-    conda create -n vis-escape-server python=3.11
-    conda activate vis-escape-server
-    ```
-2. Install `vllm==0.7.3`
-    ```bash
-    pip install vllm==0.7.3
-    ```
+## 2. Before Running Experiments
+Before running experiments, you need to make captions for each observations by running `bash ./scripts/make_caption.sh`
+Image caption is required when run mode is `socratic` or Memory module of VisEscaper is used.
+
+Captions will be saved in `./assets/[room]/captions/[model_name]/image_captions.json`
+
+*   Note that due to github repository size limit, we downsampled all image observation's resolution to 1/16. This may cause some performance degradation regarding captioning or VLM Agent's performance. Especially, key information in visual quiz items may be lost due to image downsampling. If you want to download original high-resolution images, you can download it from https://huggingface.co/datasets/sngwon/VisEscape_Observation. After downloading, you can replace the original images in `./assets/[room]/image` with the downloaded images.
 
 
-## 3. Running experiment 
+## 3. Experiment-BaseAgent
+BaseAgent is a baseline agent, which does not use any module including memory and reasoning.
 
-### 1. Launch server (required for open-source models)
-
-Since experiment for VisEscape requires interaction with game environment, we recommend you to launch vLLM server before running experiments, instead of directly calling inference API.
-
-* Change variables in `scripts/config/make_caption.sh`
-    - Set `CUDA_VISIBLE_DEVICES` to select GPUs
-    - `NUM_GPUS`: Number of GPUs you want to parallelize
-    - `VLLM_PORT`: Integer under 65536 (Where you serve)
-    - `HF_MODEL_NAME`: Huggingface model tag
-    - `MAX_MODEL_LEN`: Max token length
-
-* Execute:
-    ```bash
-    bash ./scripts/server/vllm.sh
-    ```
-    Then you can access your vLLM server at `http://0.0.0.0:[VLLM_PORT]/v1`.
-### 2. Make captions for each observations
-Since some modules require captions for each observations instead of raw images, you need to make captions for each observations before running experiments.  
-
-- For open-source models:
-    * Change variables in `scripts/config/make_caption.sh`
-        - `ASSET_ROOT`: Directory of ```/assets```
-        - `MODEL_NAME`: Model name in short. (see: `src/vis_escape/config/yamls/models.yaml`)
-        - `AGENT_HOSTNAME`: Your vLLM server's hostname
-        - `AGENT_PORT`: Your vLLM server's port (`VLLM_PORT` above)
-    * Execute:
-        ```bash
-        bash ./scripts/config/make_caption.sh
-        ```
-        
-- For closed-source models(e.g., GPT-4o-mini):
-    * Change variables in `scripts/config/make_caption_openai.sh`
-        - `ASSET_ROOT`: Directory of ```/assets```
-        - `MODEL_NAME`: Model name in short. (see: `src/vis_escape/config/yamls/models.yaml`)
-        - `AGENT_HOSTNAME`: Any value
-        - `AGENT_PORT`: Any value
-    * Execute:
-        ```bash
-        bash ./scripts/config/make_caption.sh
-        ```
-
-### 3. Run experiments
-For both open-source models and closed-source models, you can run experiments by executing:
 ```bash
-python scripts/run_ui.py -r room[room_number] 
+python scripts/run_baseagent.py room[room_number] \
+    -m [model_name] \
+    -n [num_experiments] \
+    -t [hint_mode] \
+    -r [run_mode]
+```
+
+**Parameters:**
+- `model_name`: Model name defined in `src/vis_escape/config/models.yaml`. Before running specific model, you need to register the model in "models" field  and "presets" field. 
+- `num_experiments`: Number of experiments to run
+- `hint_mode`: 
+  - `hint`: Agent receives hint messages when no checkpoint change occurs for 30 turns
+  - `no_hint`: Agent receives no hint messages
+- `run_mode`:
+  - `vlm`: Observations provided as images, agent uses VLM for inference
+  - `socratic`: Observations provided as captions (generated by `model_name`), agent uses LLM for inference. Before running experiments, you need to make captions for each observations by running `bash ./scripts/make_caption.sh`
+
+
+
+The results will be saved in `./results/BaseAgent/`.
+
+## 4. Experiment-VisEscaper
+
+### 2. Run experiments
+
+```bash
+python scripts/run_visescaper.py room[room_number]
                          -m [model_name]
                          -n [num_experiments]
                          -t [hint/no_hint]
-                         -r [vlm/socratic]
+                         -r [run_mode]
 ```
-Then the metadata for each step and the final result will be saved in `./scripts/results/`.
+**Parameters:**
+- `model_name`: Model name defined in `endpoints.yaml`
+- `num_experiments`: Number of experiments to run
+- `hint_mode`: 
+  - `hint`: Agent receives hint messages when no checkpoint change occurs for 30 turns
+  - `no_hint`: Agent receives no hint messages
+- `run_mode`:
+  - `vlm`: Observations provided as images, agent uses VLM for inference
+  - `socratic`: Observations provided as captions (generated by `model_name`), agent uses LLM for inference. Before running experiments, you need to make captions for each observations by running `bash ./scripts/make_caption.sh`
+
+The results will be saved in `./results/VisEscaper/`.
 
 
 
 
-
-### Test Escape Games by yourself
-You can play the escape rooms game by yourself by executing:
+## 4. Evaluation
+After running experiments, you can evaluate the results by running:
 ```bash
-python scripts/run_ui.py -r room[room_number]
+python evaluation/get_score.py --trajectory [trajectory_file] --room [room_number] [--hint]
 ```
+
+**Parameters:**
+- `trajectory_file`: Path to the trajectory JSON file
+- `room_number`: Room number (1-20)
+- `hint`: If provided, statistics regarding hint will be calculated. If not provided, default is `no_hint`.
+
+
+
+
+
+
+## 5. Test Escape Games by yourself!
+We support running the escape rooms game by yourself in GUI mode with python library `tkinter`.
+
+You can play the escape rooms game by executing:
+```bash
+python scripts/run_human.py -r room[room_number]
+```
+
+
+## 6. Acknowledgments
+
 

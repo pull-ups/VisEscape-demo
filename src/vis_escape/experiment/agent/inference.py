@@ -4,8 +4,6 @@ import time
 
 from PIL import Image
 
-from vis_escape.config.models import get_model_tag
-
 
 def _encode_image(image_path: str) -> str:
     with Image.open(image_path) as img:
@@ -24,118 +22,95 @@ def run_inference_text(
     prompt_type: str = "action",
     system_prompt: str = None,
 ) -> str:
-    if "gpt" in model:
-        client = clients["gpt"]
-        retry_count = 0
-        while retry_count < 3:
-            try:
-                response = client.chat.completions.create(
-                    model=model,
-                    messages=[{"role": "user", "content": prompt}],
-                )
-                return response.choices[0].message.content.strip()
-            except Exception as e:
-                print(f"Error during API call: {e}")
-                retry_count += 1
-                time.sleep(5)
-        return ""
-    else:
-        client = clients[model]
-        real_model_name = get_model_tag(model)
-        r1_error_count = 0
-        retry_count = 0
+    """
+    Run text inference using the specified model.
+    
+    Args:
+        clients: Dictionary of model name -> OpenAI client
+        model: Model name (e.g., 'gpt-4o-mini' or 'Qwen/Qwen2.5-32B-Instruct')
+        prompt: The prompt text
+        prompt_type: Type of prompt (for logging)
+        system_prompt: Optional system prompt
+    
+    Returns:
+        Generated text response
+    """
+    if model not in clients:
+        raise ValueError(f"Model '{model}' not found in configured clients. Available models: {list(clients.keys())}")
+    
+    client = clients[model]
+    r1_error_count = 0
+    retry_count = 0
 
-        while retry_count < 3:
-            try:
-                if system_prompt:
-                    print(
-                        f"Running Inference with {real_model_name} with system prompt"
-                    )
-                    chat_response = client.chat.completions.create(
-                        model=real_model_name,
-                        messages=[
-                            {"role": "system", "content": system_prompt},
-                            {"role": "user", "content": prompt},
-                        ],
-                    )
+    while retry_count < 3:
+        try:
+            messages = []
+            if system_prompt:
+                messages.append({"role": "system", "content": system_prompt})
+                print(f"Running Inference with {model} with system prompt")
+            else:
+                print(f"Running Inference with {model}")
+            
+            messages.append({"role": "user", "content": prompt})
+            
+            chat_response = client.chat.completions.create(
+                model=model,
+                messages=messages,
+            )
+            
+            response_text = chat_response.choices[0].message.content.strip()
+            
+            # Special handling for DeepSeek R1 models
+            if "R1" in model or "DeepSeek" in model:
+                if "</think>" not in response_text:
+                    r1_error_count += 1
+                    if r1_error_count >= 3:
+                        print("R1 model failed to return <think> tag 3 times, returning response anyway")
+                        return response_text
+                    raise Exception("R1 model did not return <think> tag")
                 else:
-                    print(f"Running Inference with {real_model_name}")
-                    chat_response = client.chat.completions.create(
-                        model=real_model_name,
-                        messages=[
-                            {"role": "user", "content": prompt},
-                        ],
-                    )
+                    # Extract content after </think> tag
+                    return response_text.split("</think>")[1].strip()
+            else:
+                return response_text
 
-                if "R1" in real_model_name:
-                    if (
-                        "</think>"
-                        not in chat_response.choices[0].message.content.strip()
-                    ):
-                        r1_error_count += 1
-                        if r1_error_count >= 3:
-                            print(
-                                "R1 model failed to return <think> tag 3 times, returning response anyway"
-                            )
-                            return chat_response.choices[0].message.content.strip()
-                        raise Exception("R1 model did not return <think> tag")
-                    else:
-                        return (
-                            chat_response.choices[0]
-                            .message.content.strip()
-                            .split("</think>")[1]
-                            .strip()
-                        )
-                else:
-                    return chat_response.choices[0].message.content.strip()
-
-            except Exception as e:
-                print(f"Error during API call: {e}")
-                retry_count += 1
-                time.sleep(5)
-        return ""
+        except Exception as e:
+            print(f"Error during API call: {e}")
+            retry_count += 1
+            time.sleep(5)
+    
+    return ""
 
 
 def run_inference_vision(clients, model_name: str, image_path: str, prompt: str) -> str:
-    if "gpt" in model_name:
-        client = clients["gpt"]
-        return run_inference_vision_gpt(client, model_name, image_path, prompt)
-    else:
-        client = clients[model_name]
-        real_model_name = get_model_tag(model_name)
-
-        print(f"Running Inference with {real_model_name} WITH image!")
+    """
+    Run vision inference using the specified model.
+    
+    Args:
+        clients: Dictionary of model name -> OpenAI client
+        model_name: Model name (e.g., 'gpt-4o-mini' or 'OpenGVLab/InternVL2_5-38B')
+        image_path: Path to the image file
+        prompt: The prompt text
+    
+    Returns:
+        Generated text response
+    """
+    if model_name not in clients:
+        raise ValueError(f"Model '{model_name}' not found in configured clients. Available models: {list(clients.keys())}")
+    
+    client = clients[model_name]
+    print(f"Running Vision Inference with {model_name}")
+    
+    retry_count = 0
+    while retry_count < 3:
         try:
             base64_image = _encode_image(image_path)
-            chat_response = client.chat.completions.create(
-                model=real_model_name,
-                messages=[
-                    {
-                        "role": "user",
-                        "content": [
-                            {"type": "text", "text": prompt},
-                            {
-                                "type": "image_url",
-                                "image_url": {
-                                    "url": f"data:image/jpeg;base64,{base64_image}"
-                                },
-                            },
-                        ],
-                    }
-                ],
-            )
-            return chat_response.choices[0].message.content.strip()
-        except Exception as e:
-            return ""
-
-
-def run_inference_vision_gpt(
-    client, model_name: str, image_path: str, prompt: str, system_prompt: str = None
-) -> str:
-    print("------------------Inference with Vision!------------------------------")
-    base64_image = _encode_image(image_path)
-    while True:
-        try:
+            
+            # Determine detail level based on model type
+            image_config = {"url": f"data:image/jpeg;base64,{base64_image}"}
+            if "gpt" in model_name.lower():
+                image_config["detail"] = "low"
+            
             response = client.chat.completions.create(
                 model=model_name,
                 messages=[
@@ -145,20 +120,23 @@ def run_inference_vision_gpt(
                             {"type": "text", "text": prompt},
                             {
                                 "type": "image_url",
-                                "image_url": {
-                                    "url": f"data:image/jpeg;base64,{base64_image}",
-                                    "detail": "low",
-                                },
+                                "image_url": image_config,
                             },
                         ],
                     }
                 ],
             )
             return response.choices[0].message.content.strip()
+        
         except Exception as e:
-            print(f"Error during API call: {e}")
-            time.sleep(5)
-            continue
+            print(f"Error during Vision API call: {e}")
+            retry_count += 1
+            if retry_count < 3:
+                time.sleep(5)
+            else:
+                return ""
+    
+    return ""
 
 
 def run_inference_vision_noimage(
@@ -168,56 +146,60 @@ def run_inference_vision_noimage(
     prompt_type: str = "action",
     system_prompt: str = None,
 ) -> str:
-    if "gpt" in model_name:
-        raise NotImplementedError
-        # client = clients["gpt"]
-        # return run_inference_vision_gpt_noimage(client, model_name, prompt)
-    else:
-        client = clients[model_name]
-        real_model_name = get_model_tag(model_name)
-
-        try:
-            if system_prompt:
-                print(
-                    f"Running Inference with {real_model_name} WITHOUT image, with system prompt!"
-                )
-
-                chat_response = client.chat.completions.create(
-                    model=real_model_name,
-                    messages=[
-                        {"role": "system", "content": system_prompt},
-                        {
-                            "role": "user",
-                            "content": [
-                                {"type": "text", "text": prompt},
-                            ],
-                        },
-                    ],
-                )
-            else:
-                print(
-                    f"Running Inference with {real_model_name} WITHOUT image, without system prompt!"
-                )
-                chat_response = client.chat.completions.create(
-                    model=real_model_name,
-                    messages=[
-                        {
-                            "role": "user",
-                            "content": [
-                                {"type": "text", "text": prompt},
-                            ],
-                        }
-                    ],
-                )
-            return chat_response.choices[0].message.content.strip()
-        except Exception as e:
-            print(f"Error during API call: {e}")
-            return ""
+    """
+    Run text-only inference (fallback for vision models).
+    
+    Args:
+        clients: Dictionary of model name -> OpenAI client
+        model_name: Model name
+        prompt: The prompt text
+        prompt_type: Type of prompt (for logging)
+        system_prompt: Optional system prompt
+    
+    Returns:
+        Generated text response
+    """
+    if model_name not in clients:
+        raise ValueError(f"Model '{model_name}' not found in configured clients")
+    
+    client = clients[model_name]
+    
+    try:
+        messages = []
+        if system_prompt:
+            messages.append({"role": "system", "content": system_prompt})
+            print(f"Running Inference with {model_name} WITHOUT image, with system prompt!")
+        else:
+            print(f"Running Inference with {model_name} WITHOUT image, without system prompt!")
+        
+        messages.append({"role": "user", "content": [{"type": "text", "text": prompt}]})
+        
+        chat_response = client.chat.completions.create(
+            model=model_name,
+            messages=messages,
+        )
+        return chat_response.choices[0].message.content.strip()
+    
+    except Exception as e:
+        print(f"Error during API call: {e}")
+        return ""
 
 
 def run_inference_vision_caption(
     client, image_path: str, prompt: str, model: str = "gpt-4o-mini"
 ) -> str:
+    """
+    Run vision inference for captioning (backward compatibility).
+    
+    Args:
+        client: OpenAI client instance
+        image_path: Path to the image file
+        prompt: The prompt text
+        model: Model name
+    
+    Returns:
+        Generated caption
+    """
     base64_image = _encode_image(image_path)
     while True:
         try:

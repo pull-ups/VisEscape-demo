@@ -4,37 +4,6 @@ from typing import List
 init_prompt = """You are an AI agent playing a room escape game. The room is surrounded by 4 walls, and you can explore other walls by "turn_to_[direction]". Each wall has objects that you can interact with, and you can inspect the object by "inspect [object]". Please read the given information and task description below carefully and respond accordingly."""
 
 
-def get_prompt_short_term_planning(
-    previous_plan: str,
-    inventory: List[str],
-    spatial_memory: str,
-    action_history: List[str],
-) -> str:
-    plan_text = (
-        f"<Your previous plan>{previous_plan}</Your previous plan>\n"
-        if previous_plan
-        else ""
-    )
-    inventory_text = "You have nothing." if not inventory else f"You have {inventory}."
-    action_history_str = "\n".join(action_history)
-    prompt = f"""{init_prompt}.
-{plan_text}
-<Inventory>{inventory_text}</Inventory>
-<Spatial Memory>{spatial_memory}</Spatial Memory>
-<Recent actions(from oldest to latest)>
-{action_history_str}</Recent actions>
-
-Here is the definition of each information:
-<Your previous plan>: A plan that you have followed until now.
-<Inventory>: A list of items that you have in your inventory.
-<Spatial Memory>: A memory that tracks and stores information about the state, position, and visual information of objects in your surroundings.
-<Recent actions>: Sequence of actions you have performed under your previous plan.
-
-Here is the task:
-Analyzing your <Spatial Memory> and <Recent actions>, Make a new plan to progress in the game. Please respond following below format without any other text:
-[PLAN]"""
-    return prompt
-
 
 def get_prompt_action_memory_construct(action_history: List[str]) -> str:
     last10history_str = "\n".join(

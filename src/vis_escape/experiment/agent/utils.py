@@ -2,9 +2,8 @@ import json
 import os
 from typing import Dict, List
 
-from vis_escape.constants import EVALUATION_DIR, SCRIPTS_DIR
+from vis_escape.constants import RESULTS_DIR
 from vis_escape.game.manage.game_state import GameState
-from vis_escape.game.run.replay import ReplayVideoCreator
 
 
 def load_game_state_from_config(config_path: str) -> "GameState":
@@ -30,8 +29,8 @@ def save_run_history(
 ):
     if agent_type:
         log_dir = os.path.join(
-            SCRIPTS_DIR,
-            f"results_{agent_type}",
+            RESULTS_DIR,
+            f"{agent_type}",
             "logs",
             model_name,
             run_mode,
@@ -40,8 +39,8 @@ def save_run_history(
         )
     else:
         log_dir = os.path.join(
-            SCRIPTS_DIR,
-            f"results_{run_mode}",
+            RESULTS_DIR,
+            f"{run_mode}",
             "logs",
             model_name,
             run_mode,
@@ -192,62 +191,4 @@ def _parse_salient_action_history(salient_action_history: List[str]) -> str:
         processed_actions[key] = string
     return [i for i in processed_actions.values()]
 
-
-def save_spatial_memory_evaluation(
-    spatial_memory: str,
-    game_state: "GameState",
-    step_count: int,
-    room_name: str,
-    model_name: str,
-    run_start_time: str,
-) -> None:
-    """Save spatial memory evaluation results to a JSON file
-
-    Args:
-        spatial_memory (str): Current spatial memory string
-        game_state (GameState): Current game state
-        step_count (int): Current step count
-        room_name (str): Name of the room
-        model_name (str): Name of the model
-        run_start_time (str): Run start timestamp
-    """
-    parsed, parsed_memory = _parse_spatial_memory(spatial_memory)
-    if parsed:
-        result = {
-            "success": True,
-            "pred": {
-                "receptacle_memory": parsed_memory["SPATIAL MEMORY"],
-                "inspected_objects": parsed_memory["INSPECTED OBJECTS"],
-                "uninspected_objects": parsed_memory["UNINSPECTED OBJECTS"],
-                "additional_memory": parsed_memory["ADDITIONAL MEMORY"],
-            },
-            "gt": game_state.export_current_state(),
-        }
-    else:
-        result = {
-            "success": False,
-            "pred": parsed_memory,
-            "gt": game_state.export_current_state(),
-        }
-
-    target_dir = os.path.join(
-        EVALUATION_DIR, "spatial_memory", model_name, room_name, run_start_time
-    )
-    os.makedirs(target_dir, exist_ok=True)
-
-    with open(os.path.join(target_dir, f"current_state_{step_count}.json"), "w") as f:
-        json.dump(result, f, indent=4)
-
-
-def create_replay_video(room_name: str, run_start_time: str, current_dir: str):
-    log_dir = os.path.join(current_dir, "results", "logs", room_name)
-    history_file = f"{log_dir}/run_history_{run_start_time}.json"
-    video_filename = f"replay_{run_start_time}.mp4"
-    video_path = os.path.join(log_dir, video_filename)
-
-    creator = ReplayVideoCreator(
-        log_file_path=history_file, output_path=video_path, fps=1
-    )
-    creator.create_video()
-    print(f"Video created at: {video_path}")
 

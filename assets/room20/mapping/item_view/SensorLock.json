@@ -1,0 +1,14 @@
+{
+  "item_states": [
+    {
+      "idx": 1,
+      "name": "not_solved",
+      "image_path": "SensorLock(not_solved).png"
+    },
+    {
+      "idx": 2,
+      "name": "solved",
+      "image_path": "SensorLock(solved).png"
+    }
+  ]
+}

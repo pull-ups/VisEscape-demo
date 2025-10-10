@@ -3,7 +3,7 @@ from typing import List, Optional
 
 from openai import OpenAI
 
-from vis_escape.config.models import get_model_long
+from vis_escape.config.models import get_config
 from vis_escape.experiment.agent.inference import (
     run_inference_text,
     run_inference_vision,
@@ -14,7 +14,8 @@ from .prompt import *
 
 class Agent:
     def __init__(self, model_cfg=None):
-        self.clients = self._get_client(model_cfg)
+        self.config = get_config(model_cfg)
+        self.clients = self._get_client()
 
     def get_next_action_first_turn(
         self,
@@ -272,17 +273,29 @@ class Agent:
         return response
 
     # Helper
-    def _get_client(self, model_cfg=None):
-        try:
-            clients = {"gpt": OpenAI(api_key=os.getenv("OPENAI_API_KEY"))}
-        except:
-            clients = {}
-        table = get_model_long(model_cfg)
-        for k, v in table.items():
-            base_url = f"http://{v['hostname']}:{v['port']}/v1"
-            default_query = v.get("args", None)
-            clients[k] = OpenAI(
-                api_key="EMPTY", base_url=base_url, default_query=default_query
-            )
-
+    def _get_client(self):
+        """
+        Create OpenAI clients for all configured models.
+        Returns a dict mapping model names to OpenAI client instances.
+        """
+        clients = {}
+        
+        for model_name, model_config in self.config["models"].items():
+            if model_config["type"] == "openai":
+                # OpenAI API
+                try:
+                    clients[model_name] = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+                except Exception as e:
+                    print(f"Warning: Failed to create OpenAI client for {model_name}: {e}")
+            
+            elif model_config["type"] == "vllm":
+                # vLLM endpoint (OpenAI-compatible)
+                base_url = model_config["base_url"]
+                default_query = model_config.get("args", None)
+                clients[model_name] = OpenAI(
+                    api_key="EMPTY",
+                    base_url=base_url,
+                    default_query=default_query
+                )
+        
         return clients

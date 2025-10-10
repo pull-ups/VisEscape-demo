@@ -217,7 +217,6 @@ class ViewManager:
         wall_state = game_state.get_current_wall()
 
         state_key = self._encode_wall_state(wall_state)
-
         wall_images = self.wall_images.get(wall_id, {})
 
         return wall_images.get(state_key, wall_images.get("default", ""))
@@ -272,7 +271,6 @@ class ViewManager:
             for obj_id, obj in wall_state.receptacles.items()
         }
         mapping_file = self.mapping_dir / "wall_view" / f"{wall_state.wall_id}.json"
-
         with open(mapping_file, "r") as f:
             mapping_data = json.load(f)
 

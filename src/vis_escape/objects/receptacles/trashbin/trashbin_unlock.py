@@ -9,7 +9,7 @@ class Trashbin(Receptacle):
         super().__init__(
             id=id,
             possible_states={"closed", "open"},
-            initial_state="locked",
+            initial_state="closed",
             interactable_states=interactable_states,
         )
 

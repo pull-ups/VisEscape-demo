@@ -5,8 +5,5 @@ PROJECT_ROOT = os.path.abspath(
 )
 
 ASSETS_DIR = os.path.join(PROJECT_ROOT, "assets")
-SCRIPTS_DIR = os.path.join(PROJECT_ROOT, "scripts")
-EVALUATION_DIR = os.path.join(PROJECT_ROOT, "evaluation")
-
-RUN_MODE = "base"
+RESULTS_DIR = os.path.join(PROJECT_ROOT, "results")
 
