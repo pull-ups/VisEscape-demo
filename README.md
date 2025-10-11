@@ -81,7 +81,7 @@ The results will be saved in `./results/BaseAgent/`.
 
 ## 4. Experiment-VisEscaper
 
-### 2. Run experiments
+VisEscaper is an agent implementation we propose, which is equipped with memory management and reasoning module.
 
 ```bash
 python scripts/run_visescaper.py room[room_number]
