@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VisEscape - Static Human Player</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main class="app-shell">
+    <header class="app-header">
+      <div class="header-top">
+        <h1>VisEscape</h1>
+        <div class="room-picker">
+          <label for="room-select">Room</label>
+          <select id="room-select">
+            <option value="room1">room1</option>
+          </select>
+          <button id="load-room" type="button" class="secondary">Load</button>
+        </div>
+      </div>
+      <div class="status-line">
+        <span id="action-count">Actions: 0</span>
+        <span id="view-info">View: -</span>
+      </div>
+      <div id="status-banner" class="status-banner" hidden></div>
+    </header>
+
+    <section class="messages">
+      <p id="system-message" class="system-message"></p>
+      <p id="last-action-message" class="last-action"></p>
+      <p id="after-state-message" class="after-state"></p>
+    </section>
+
+    <section class="image-panel">
+      <img id="room-image" alt="Current room view" hidden />
+      <div id="image-placeholder" class="image-placeholder" hidden>
+        No image available for this state.
+      </div>
+    </section>
+
+    <section class="info-cards">
+      <div class="card">
+        <h2>Inventory</h2>
+        <div id="inventory" class="pill-group"></div>
+      </div>
+      <div class="card">
+        <h2>Active Triggers</h2>
+        <div id="triggers" class="pill-group"></div>
+      </div>
+    </section>
+
+    <section class="actions-panel">
+      <div class="panel-heading">
+        <h2>Available Actions</h2>
+        <button id="reset-button" type="button" class="secondary">Reset Run</button>
+      </div>
+      <div id="actions-container" class="actions-grid"></div>
+    </section>
+
+    <section id="quiz-section" class="quiz-section" hidden>
+      <h2>Puzzle Input</h2>
+      <p id="quiz-prompt" class="quiz-prompt"></p>
+      <form id="quiz-form" class="quiz-form">
+        <input id="quiz-input" type="text" placeholder="Enter answer here" autocomplete="off" />
+        <button type="submit">Submit</button>
+      </form>
+    </section>
+  </main>
+
+  <script src="static_data/room1.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
