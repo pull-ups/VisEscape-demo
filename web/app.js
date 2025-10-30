@@ -18,6 +18,13 @@ const roomSelect = document.getElementById("room-select");
 const loadRoomButton = document.getElementById("load-room");
 const resetButton = document.getElementById("reset-button");
 const leaderboardBody = document.getElementById("leaderboard-body");
+const leaderboardSection = document.getElementById("leaderboard-section");
+
+// Modal elements
+const modalEl = document.getElementById("congrats-modal");
+const modalTurnsEl = document.getElementById("modal-turns");
+const modalCloseBtn = document.getElementById("modal-close");
+const modalViewBtn = document.getElementById("modal-view-leaderboard");
 
 const ASSETS_BASE = "../assets/";
 
@@ -28,6 +35,7 @@ let currentStateId = null;
 let actionCount = 0;
 let lastActionMessage = "";
 let afterStateMessage = "";
+let congratsShown = false;
 
 function loadRoom(roomName) {
   const graphs = window.__VisEscapeGraphs || {};
@@ -110,6 +118,11 @@ function renderState() {
   if (state.gameClear) {
     setBanner(`Room cleared in ${actionCount} steps!`, "success");
     updateLeaderboardWithYou(actionCount);
+    if (leaderboardSection) leaderboardSection.hidden = false;
+    if (!congratsShown) {
+      showCongratsPopup(actionCount);
+      congratsShown = true;
+    }
   } else if (!statusBanner.hidden && statusBanner.dataset.autoClear === "1") {
     // keep current message until timeout clears it
   } else {
@@ -288,6 +301,7 @@ function resetRun() {
   actionCount = 0;
   lastActionMessage = graphData.initialMessages?.action || "";
   afterStateMessage = graphData.initialMessages?.after || "";
+  congratsShown = false;
   setBanner("Run reset.", "info", 1200);
   renderState();
 }
@@ -343,3 +357,36 @@ window.addEventListener("load", () => {
     renderEmpty();
   }
 });
+
+function showCongratsPopup(turns) {
+  if (!modalEl) return;
+  if (modalTurnsEl) modalTurnsEl.textContent = String(turns);
+  modalEl.hidden = false;
+}
+
+function hideCongratsPopup() {
+  if (!modalEl) return;
+  modalEl.hidden = true;
+}
+
+if (modalCloseBtn) {
+  modalCloseBtn.addEventListener("click", hideCongratsPopup);
+}
+
+if (modalViewBtn) {
+  modalViewBtn.addEventListener("click", () => {
+    hideCongratsPopup();
+    if (leaderboardSection) {
+      leaderboardSection.hidden = false;
+      leaderboardSection.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  });
+}
+
+if (modalEl) {
+  modalEl.addEventListener("click", (e) => {
+    if (e.target === modalEl || e.target.classList.contains("modal-backdrop")) {
+      hideCongratsPopup();
+    }
+  });
+}

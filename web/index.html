@@ -38,6 +38,13 @@
       </div>
     </section>
 
+    <section class="actions-panel">
+      <div class="panel-heading">
+        <h2>Available Actions</h2>
+      </div>
+      <div id="actions-container" class="actions-grid"></div>
+    </section>
+
     <section class="info-cards">
       <div class="card">
         <h2>Inventory</h2>
@@ -49,13 +56,6 @@
       </div>
     </section>
 
-    <section class="actions-panel">
-      <div class="panel-heading">
-        <h2>Available Actions</h2>
-      </div>
-      <div id="actions-container" class="actions-grid"></div>
-    </section>
-
     <section id="quiz-section" class="quiz-section" hidden>
       <h2>Puzzle Input</h2>
       <p id="quiz-prompt" class="quiz-prompt"></p>
@@ -65,7 +65,7 @@
       </form>
     </section>
 
-    <section id="leaderboard-section" class="leaderboard-section">
+    <section id="leaderboard-section" class="leaderboard-section" hidden>
       <h2>Leaderboard</h2>
       <table class="leaderboard-table">
         <thead>
@@ -94,6 +94,19 @@
         </tbody>
       </table>
     </section>
+    <!-- Congratulations Modal -->
+    <div id="congrats-modal" class="modal" hidden>
+      <div class="modal-backdrop"></div>
+      <div class="modal-content">
+        <h2>Congratulations!</h2>
+        <p>You cleared the room in <span id="modal-turns">-</span> steps.</p>
+        <div class="modal-actions">
+          <button id="modal-view-leaderboard" type="button">View Leaderboard</button>
+          <button id="modal-close" type="button" class="secondary">Close</button>
+        </div>
+      </div>
+    </div>
+
   </main>
 
   <script src="/VisEscape-demo/web/static_data/room1.js" defer></script>
