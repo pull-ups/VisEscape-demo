@@ -183,15 +183,16 @@ def build_state_graph(room_name: str) -> Dict[str, Any]:
             prev_snapshot = copy.deepcopy(current_state)
             with contextlib.redirect_stdout(io.StringIO()):
                 success = next_state.handle_action(action)
-            if not success:
-                continue
 
-            transition_vm = ViewManager(str(room_assets), "", copy.deepcopy(next_state), play_mode="human")
+            result_state = next_state if success else prev_snapshot
+            transition_vm = ViewManager(
+                str(room_assets), "", copy.deepcopy(result_state), play_mode="human"
+            )
             image_after = transition_vm.get_current_view_image(
-                next_state, prev_snapshot, action
+                result_state, prev_snapshot, action
             )
 
-            next_key, next_id = ensure_state_id(next_state)
+            next_key, next_id = ensure_state_id(result_state)
             action_entry = {
                 "label": action,
                 "type": "button",
@@ -205,7 +206,7 @@ def build_state_graph(room_name: str) -> Dict[str, Any]:
             node_data["actions"].append(action_entry)
             used_action_labels.add(action)
 
-            if next_key not in visited:
+            if success and next_key not in visited:
                 queue.append(next_state)
 
         # Typed answers for quizzes

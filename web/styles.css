@@ -19,29 +19,29 @@ body {
 
 .app-shell {
   width: min(1200px, 95vw);
-  padding: 24px;
+  padding: 16px;
   display: grid;
   grid-template-columns: 1fr;
-  gap: 24px;
+  gap: 16px;
 }
 
 .app-header {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 8px;
 }
 
 .header-top {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 16px;
+  gap: 12px;
   flex-wrap: wrap;
 }
 
 .app-header h1 {
   margin: 0;
-  font-size: 32px;
+  font-size: 24px;
   letter-spacing: 2px;
   text-transform: uppercase;
 }
@@ -49,8 +49,8 @@ body {
 .room-picker {
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 8px 12px;
+  gap: 8px;
+  padding: 6px 10px;
   border-radius: 12px;
   background: rgba(15, 23, 42, 0.6);
 }
@@ -71,8 +71,8 @@ body {
 .status-line {
   display: flex;
   flex-wrap: wrap;
-  gap: 16px;
-  font-size: 14px;
+  gap: 12px;
+  font-size: 13px;
   opacity: 0.85;
 }
 
@@ -93,14 +93,14 @@ body {
 }
 
 .messages {
-  padding: 16px;
+  padding: 10px;
   border-radius: 12px;
   background: rgba(30, 41, 59, 0.55);
   backdrop-filter: blur(6px);
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  font-size: 15px;
+  gap: 6px;
+  font-size: 14px;
 }
 
 .system-message {
@@ -115,13 +115,13 @@ body {
   border-radius: 16px;
   overflow: hidden;
   background: rgba(15, 23, 42, 0.7);
-  min-height: 420px;
+  min-height: 320px;
 }
 
 #room-image {
   max-width: 100%;
   width: auto;
-  height: 420px;
+  height: 320px;
   object-fit: contain;
 }
 
@@ -138,11 +138,11 @@ body {
 }
 
 .card {
-  padding: 16px;
+  padding: 12px;
   border-radius: 12px;
   background: rgba(30, 41, 59, 0.55);
   backdrop-filter: blur(6px);
-  min-height: 120px;
+  min-height: 80px;
 }
 
 .card h2 {
@@ -170,7 +170,7 @@ body {
 }
 
 .actions-panel {
-  padding: 16px;
+  padding: 12px;
   border-radius: 12px;
   background: rgba(15, 23, 42, 0.7);
   backdrop-filter: blur(6px);
@@ -251,6 +251,38 @@ button.secondary {
   opacity: 0.8;
 }
 
+.leaderboard-section {
+  padding: 16px;
+  border-radius: 12px;
+  background: rgba(15, 23, 42, 0.7);
+  backdrop-filter: blur(6px);
+}
+
+.leaderboard-section h2 {
+  margin: 0 0 12px;
+  font-size: 18px;
+}
+
+.leaderboard-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.leaderboard-table th,
+.leaderboard-table td {
+  text-align: left;
+  padding: 10px 12px;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.25);
+}
+
+.leaderboard-table thead th {
+  opacity: 0.85;
+}
+
+.leaderboard-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
 .empty-actions {
   opacity: 0.6;
   font-style: italic;
@@ -265,3 +297,5 @@ button.secondary {
     grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
   }
 }
+
+/* (removed) Force-hide for quiz section to keep input visible */

@@ -17,6 +17,7 @@ statusBanner.dataset.autoClear = "0";
 const roomSelect = document.getElementById("room-select");
 const loadRoomButton = document.getElementById("load-room");
 const resetButton = document.getElementById("reset-button");
+const leaderboardBody = document.getElementById("leaderboard-body");
 
 const ASSETS_BASE = "../assets/";
 
@@ -47,7 +48,9 @@ function loadRoom(roomName) {
   lastActionMessage = graphData.initialMessages?.action || "";
   afterStateMessage = graphData.initialMessages?.after || "";
 
-  systemMessageEl.textContent = graphData.systemMessage || "";
+  if (systemMessageEl) {
+    systemMessageEl.textContent = graphData.systemMessage || "";
+  }
   renderState();
   setBanner(`${roomName} ready.`, "success", 1200);
 }
@@ -61,8 +64,8 @@ function renderEmpty() {
   triggersEl.innerHTML = "";
   actionsContainer.innerHTML = "";
   quizSection.hidden = true;
-  lastActionMessageEl.textContent = "";
-  afterStateMessageEl.textContent = "";
+  if (lastActionMessageEl) lastActionMessageEl.textContent = "";
+  if (afterStateMessageEl) afterStateMessageEl.textContent = "";
 }
 
 function renderState() {
@@ -85,8 +88,8 @@ function renderState() {
   if (state.item) viewParts.push(`Item: ${state.item}`);
   viewInfoEl.textContent = `View: ${viewParts.join(" · ")}`;
 
-  lastActionMessageEl.textContent = lastActionMessage || "";
-  afterStateMessageEl.textContent = afterStateMessage || "";
+  if (lastActionMessageEl) lastActionMessageEl.textContent = lastActionMessage || "";
+  if (afterStateMessageEl) afterStateMessageEl.textContent = afterStateMessage || "";
 
   if (state.image) {
     imageEl.src = ASSETS_BASE + state.image;
@@ -106,11 +109,54 @@ function renderState() {
 
   if (state.gameClear) {
     setBanner(`Room cleared in ${actionCount} steps!`, "success");
+    updateLeaderboardWithYou(actionCount);
   } else if (!statusBanner.hidden && statusBanner.dataset.autoClear === "1") {
     // keep current message until timeout clears it
   } else {
     clearBanner();
   }
+}
+
+function updateLeaderboardWithYou(turns) {
+  if (!leaderboardBody) return;
+
+  // Build rows data from current table
+  const rows = Array.from(leaderboardBody.querySelectorAll("tr")).map((tr) => {
+    const cells = tr.querySelectorAll("td");
+    return {
+      rank: parseInt(cells[0].textContent.trim(), 10),
+      model: cells[1].textContent.trim(),
+      turns: parseInt(cells[2].textContent.trim(), 10),
+    };
+  });
+
+  // If YOU already exists, update if better; otherwise add
+  const existingIndex = rows.findIndex((r) => r.model.toUpperCase() === "YOU");
+  if (existingIndex >= 0) {
+    if (turns >= rows[existingIndex].turns) return;
+    rows[existingIndex].turns = turns;
+  } else {
+    rows.push({ rank: 0, model: "YOU", turns });
+  }
+
+  // Sort ascending by turns
+  rows.sort((a, b) => a.turns - b.turns);
+
+  // Re-rank and rebuild tbody
+  leaderboardBody.innerHTML = "";
+  rows.forEach((entry, idx) => {
+    const tr = document.createElement("tr");
+    const tdRank = document.createElement("td");
+    tdRank.textContent = String(idx + 1);
+    const tdModel = document.createElement("td");
+    tdModel.textContent = entry.model;
+    const tdTurns = document.createElement("td");
+    tdTurns.textContent = String(entry.turns);
+    tr.appendChild(tdRank);
+    tr.appendChild(tdModel);
+    tr.appendChild(tdTurns);
+    leaderboardBody.appendChild(tr);
+  });
 }
 
 function renderActions(state) {
