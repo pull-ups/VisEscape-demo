@@ -19,8 +19,40 @@
           </select>
           <button id="load-room" type="button" class="secondary">Load</button>
         </div>
-        <button id="reset-button" type="button" class="secondary">Reset Run</button>
+        <button id="toggle-leaderboard" type="button" class="secondary">Leaderboard</button>
       </div>
+
+      <section id="leaderboard-section" class="leaderboard-section" hidden>
+        <h2>Leaderboard</h2>
+        <table class="leaderboard-table">
+          <thead>
+            <tr>
+              <th>Rank</th>
+              <th>Model</th>
+              <th>Turn</th>
+            </tr>
+          </thead>
+          <tbody id="leaderboard-body">
+            <tr>
+              <td>1</td>
+              <td>Claude-3.5-Sonnet</td>
+              <td>32</td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>GPT-4o</td>
+              <td>45</td>
+            </tr>
+            <tr>
+              <td>3</td>
+              <td>Gemini 2.5 Pro</td>
+              <td>46</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <button id="reset-button" type="button" class="secondary">Reset Run</button>
       <div class="status-line">
         <span id="action-count">Actions: 0</span>
         <span id="view-info" hidden>View: -</span>
@@ -65,35 +97,7 @@
       </form>
     </section>
 
-    <section id="leaderboard-section" class="leaderboard-section" hidden>
-      <h2>Leaderboard</h2>
-      <table class="leaderboard-table">
-        <thead>
-          <tr>
-            <th>Rank</th>
-            <th>Model</th>
-            <th>Turn</th>
-          </tr>
-        </thead>
-        <tbody id="leaderboard-body">
-          <tr>
-            <td>1</td>
-            <td>Claude-3.5-Sonnet</td>
-            <td>32</td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td>GPT-4o</td>
-            <td>45</td>
-          </tr>
-          <tr>
-            <td>3</td>
-            <td>Gemini 2.5 Pro</td>
-            <td>46</td>
-          </tr>
-        </tbody>
-      </table>
-    </section>
+    
     <!-- Congratulations Modal -->
     <div id="congrats-modal" class="modal" hidden>
       <div class="modal-backdrop"></div>

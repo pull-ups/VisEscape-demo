@@ -19,6 +19,7 @@ const loadRoomButton = document.getElementById("load-room");
 const resetButton = document.getElementById("reset-button");
 const leaderboardBody = document.getElementById("leaderboard-body");
 const leaderboardSection = document.getElementById("leaderboard-section");
+const toggleLeaderboardBtn = document.getElementById("toggle-leaderboard");
 
 // Modal elements
 const modalEl = document.getElementById("congrats-modal");
@@ -118,7 +119,7 @@ function renderState() {
   if (state.gameClear) {
     setBanner(`Room cleared in ${actionCount} steps!`, "success");
     updateLeaderboardWithYou(actionCount);
-    if (leaderboardSection) leaderboardSection.hidden = false;
+    if (leaderboardSection) leaderboardSection.hidden = false; // auto-show on clear
     if (!congratsShown) {
       showCongratsPopup(actionCount);
       congratsShown = true;
@@ -387,6 +388,16 @@ if (modalEl) {
   modalEl.addEventListener("click", (e) => {
     if (e.target === modalEl || e.target.classList.contains("modal-backdrop")) {
       hideCongratsPopup();
+    }
+  });
+}
+
+if (toggleLeaderboardBtn && leaderboardSection) {
+  toggleLeaderboardBtn.addEventListener("click", () => {
+    const willShow = leaderboardSection.hidden;
+    leaderboardSection.hidden = !willShow;
+    if (willShow) {
+      leaderboardSection.scrollIntoView({ behavior: "smooth", block: "start" });
     }
   });
 }
