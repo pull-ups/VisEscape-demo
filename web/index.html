@@ -3,12 +3,17 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>VisEscape-Can you beat ChatGPT?</title>
+  <title>VisEscape demo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
+  <!-- GITHUB PAGES DEPLOY: uncomment the line below and change script paths to absolute -->
   <base href="/VisEscape-demo/web/" />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
   <main class="app-shell">
+    <div class="challenge-text">Can you beat ChatGPT?</div>
     <header class="app-header">
       <div class="header-top">
         <h1>VisEscape</h1>
@@ -19,7 +24,7 @@
           </select>
           <button id="load-room" type="button" class="secondary">Load</button>
         </div>
-        <button id="toggle-leaderboard" type="button" class="secondary">Leaderboard</button>
+        <button id="toggle-leaderboard" type="button" class="secondary">👑 Leaderboard</button>
       </div>
 
       <section id="leaderboard-section" class="leaderboard-section" hidden>
@@ -33,29 +38,15 @@
             </tr>
           </thead>
           <tbody id="leaderboard-body">
-            <tr>
-              <td>1</td>
-              <td>Claude-3.5-Sonnet</td>
-              <td>32</td>
-            </tr>
-            <tr>
-              <td>2</td>
-              <td>GPT-4o</td>
-              <td>45</td>
-            </tr>
-            <tr>
-              <td>3</td>
-              <td>Gemini 2.5 Pro</td>
-              <td>46</td>
-            </tr>
+            <!-- Leaderboard will be loaded from room data -->
           </tbody>
         </table>
       </section>
 
-      <button id="reset-button" type="button" class="secondary">Reset Run</button>
       <div class="status-line">
-        <span id="action-count">Actions: 0</span>
-        <span id="view-info">View: -</span>
+        <span id="action-count" class="action-badge">Actions: 0</span>
+        <span id="view-info" class="wall-badge" hidden></span>
+        <button id="reset-button" type="button" class="secondary">Reset Run</button>
       </div>
       <div id="status-banner" class="status-banner" hidden></div>
     </header>
@@ -111,10 +102,34 @@
       </div>
     </div>
 
+    <footer class="links-footer">
+      <p class="footer-text">Are you interested? See our paper and test your model!</p>
+      <div class="links-container">
+        <a href="https://arxiv.org/abs/2503.14427" target="_blank" rel="noopener noreferrer" class="link-item">
+          <span class="link-icon">📄</span>
+          <span class="link-label">arXiv</span>
+        </a>
+        <a href="https://github.com/pull-ups/VisEscape" target="_blank" rel="noopener noreferrer" class="link-item">
+          <span class="link-icon">💻</span>
+          <span class="link-label">GitHub</span>
+        </a>
+      </div>
+    </footer>
+
   </main>
 
-  <script src="/VisEscape-demo/web/static_data/room1.js" defer></script>
+  <!-- GITHUB PAGES DEPLOY: change these paths to absolute paths -->
+  <script src="/VisEscape-demo/web/static_data/room1.js" defer></script> 
   <script src="/VisEscape-demo/web/static_data/room2.js" defer></script>
+  <script src="/VisEscape-demo/web/static_data/room3.js" defer></script>
   <script src="/VisEscape-demo/web/app.js" defer></script>
+
+
+  <!-- LOCAL DEVELOPMENT: use relative paths -->
+  <!-- <script src="static_data/room1.js" defer></script>
+  <script src="static_data/room2.js" defer></script>
+  <script src="static_data/room3.js" defer></script>
+   -->
+  <script src="app.js" defer></script>
 </body>
 </html>

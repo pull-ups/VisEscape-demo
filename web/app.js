@@ -60,13 +60,19 @@ function loadRoom(roomName) {
   if (systemMessageEl) {
     systemMessageEl.textContent = graphData.systemMessage || "";
   }
+
+  // Load room-specific leaderboard
+  if (graphData.leaderboard) {
+    loadLeaderboard(graphData.leaderboard);
+  }
+
   renderState();
   setBanner(`${roomName} ready.`, "success", 1200);
 }
 
 function renderEmpty() {
   actionCountEl.textContent = "Actions: 0";
-  viewInfoEl.textContent = "View: -";
+  viewInfoEl.hidden = true;
   imageEl.hidden = true;
   imagePlaceholderEl.hidden = false;
   inventoryEl.innerHTML = "";
@@ -91,11 +97,13 @@ function renderState() {
   }
 
   actionCountEl.textContent = `Actions: ${actionCount}`;
-  const viewParts = [state.view || "-"];
-  if (state.wall) viewParts.push(`Wall: ${state.wall}`);
-  if (state.inspected) viewParts.push(`Inspecting: ${state.inspected}`);
-  if (state.item) viewParts.push(`Item: ${state.item}`);
-  viewInfoEl.textContent = `View: ${viewParts.join(" · ")}`;
+  if (state.wall) {
+    const wallDir = state.wall.toUpperCase();
+    viewInfoEl.textContent = `${wallDir} wall`;
+    viewInfoEl.hidden = false;
+  } else {
+    viewInfoEl.hidden = true;
+  }
 
   if (lastActionMessageEl) lastActionMessageEl.textContent = lastActionMessage || "";
   if (afterStateMessageEl) afterStateMessageEl.textContent = afterStateMessage || "";
@@ -129,6 +137,31 @@ function renderState() {
   } else {
     clearBanner();
   }
+}
+
+function loadLeaderboard(leaderboardData) {
+  if (!leaderboardBody) return;
+
+  leaderboardBody.innerHTML = "";
+  
+  if (!leaderboardData || !Array.isArray(leaderboardData) || leaderboardData.length === 0) {
+    // 기본 리더보드 (빈 상태)
+    return;
+  }
+
+  leaderboardData.forEach((entry, idx) => {
+    const tr = document.createElement("tr");
+    const tdRank = document.createElement("td");
+    tdRank.textContent = String(idx + 1);
+    const tdModel = document.createElement("td");
+    tdModel.textContent = entry.model || "";
+    const tdTurns = document.createElement("td");
+    tdTurns.textContent = String(entry.turns || 0);
+    tr.appendChild(tdRank);
+    tr.appendChild(tdModel);
+    tr.appendChild(tdTurns);
+    leaderboardBody.appendChild(tr);
+  });
 }
 
 function updateLeaderboardWithYou(turns) {
@@ -173,6 +206,17 @@ function updateLeaderboardWithYou(turns) {
   });
 }
 
+function formatActionLabel(label) {
+  if (!label) return label;
+  // Convert snake_case or kebab-case to Title Case
+  // e.g., "turn_to_south" -> "Turn to South"
+  return label
+    .replace(/[_-]/g, " ") // Replace underscores and hyphens with spaces
+    .split(" ")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+    .join(" ");
+}
+
 function renderActions(state) {
   actionsContainer.innerHTML = "";
   if (!state.actions || state.actions.length === 0) {
@@ -186,7 +230,7 @@ function renderActions(state) {
   state.actions.forEach((entry) => {
     const btn = document.createElement("button");
     btn.type = "button";
-    btn.textContent = entry.label;
+    btn.textContent = formatActionLabel(entry.label);
     if (state.gameClear) {
       btn.disabled = true;
     }
@@ -220,7 +264,7 @@ function applyAction(entry) {
   currentStateId = entry.next;
   lastActionMessage = entry.messages?.action || "";
   afterStateMessage = entry.messages?.after || "";
-  setBanner(`Action executed: ${entry.label}`, "success", 1800);
+  setBanner(`Action executed: ${formatActionLabel(entry.label)}`, "success", 1800);
   renderState();
 }
 
